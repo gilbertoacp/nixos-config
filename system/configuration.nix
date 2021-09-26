@@ -91,7 +91,6 @@
     lxappearance
     pcmanfm
     pavucontrol
-    kitty
     brave
     unrar
     unzip
@@ -115,8 +114,6 @@
     zsh
     oh-my-zsh
     psmisc
-    exa
-    bat
     pcmanfm
     sxiv
     libsForQt5.qtstyleplugin-kvantum

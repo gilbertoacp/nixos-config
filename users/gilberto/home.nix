@@ -22,5 +22,8 @@
         vim-nix
       ];
     };
+    gpg = {
+      enable = true;
+    };
   };
 }
