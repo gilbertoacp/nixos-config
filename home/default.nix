@@ -3,21 +3,24 @@
 {
   programs.home-manager.enable = true;
 
-  home.username = "gilberto";
-  home.homeDirectory = "/home/gilberto";
+  home = {
+    username = "gilberto";
+    homeDirectory = "/home/gilberto";
+    packages = with pkgs; [
+      kitty
+      bat
+      exa
+    ];
+    stateVersion = "21.11";
+  }; 
 
-  home.packages = with pkgs; [
-    kitty
-    bat
-    exa
-  ];
-
-  programs.neovim = {
+  programs = {
+    neovim = {
       enable = true;
       vimAlias = true;
       plugins = with pkgs.vimPlugins; [
-      	vim-nix
+        vim-nix
       ];
+    };
   };
-  home.stateVersion = "21.11";
 }

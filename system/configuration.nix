@@ -12,6 +12,7 @@
       experimental-features = nix-command flakes
     '';
   };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -27,42 +28,39 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   services = {
-      
-  xserver = {
-    enable = true;
-    layout = "es";
+    xserver = {
+      enable = true;
+      layout = "es";
 
-    desktopManager = {
-      xterm.enable = false;
-    };
-   
-    displayManager = {
-        lightdm = {
-	  enable = true;
-        };
-        defaultSession = "none+i3";
-    };
-
-    windowManager = {
-      i3 = {
-       enable = true;
-       extraPackages = with pkgs; [
-        dmenu         
-        i3status         
-        i3lock         
-        i3blocks     
-       ];
-       package = pkgs.i3-gaps;
+      desktopManager = {
+        xterm.enable = false;
       };
-    };   
 
+      displayManager = {
+        lightdm.enable = true;
+        defaultSession = "none+i3";
+      };
+
+      windowManager = {
+        i3 = {
+          enable = true;
+          extraPackages = with pkgs; [
+            dmenu         
+            i3status         
+            i3lock         
+            i3blocks     
+          ];
+          package = pkgs.i3-gaps;
+        };
+      };   
+    };
+    openssh = {
+      enable = true;
     };
   };
   
-
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
   users = {
     extraGroups = {
       vboxusers = {
@@ -70,11 +68,11 @@
       };
     };
     users = {
-     gilberto = {
-    	isNormalUser = true;
-    	extraGroups = [ "wheel" "networkmanager" "video" "audio" "storage" ];  
-    	shell = pkgs.zsh;
-     };
+      gilberto = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "networkmanager" "video" "audio" "storage" "docker"];  
+        shell = pkgs.zsh;
+      };
     }; 
   }; 
 
@@ -84,47 +82,48 @@
     php = pkgs.php.buildEnv { extraConfig = "memory_limit = 2G"; };
   in
   [
-     wget 
-     vim
-     emacs
-     htop
-     neofetch
-     git
-     lxappearance
-     pcmanfm
-     pavucontrol
-     kitty
-     brave
-     unrar
-     unzip
-     zip 
-     p7zip
-     lsof
-     imwheel
-     mpv
-     rofi
-     polybar   
-     vscodium
-     libreoffice
-     arc-theme
-     arc-icon-theme
-     nitrogen
-     ripgrep
-     fd
-     simplescreenrecorder
-     picom
-     lxsession
-     dunst 
-     zsh
-     oh-my-zsh
-     psmisc
-     exa
-     bat
-     pcmanfm
-     sxiv
-     libsForQt5.qtstyleplugin-kvantum
-     php
-     gnumake
+    wget 
+    vim
+    emacs
+    htop
+    neofetch
+    git
+    lxappearance
+    pcmanfm
+    pavucontrol
+    kitty
+    brave
+    unrar
+    unzip
+    zip 
+    p7zip
+    lsof
+    imwheel
+    mpv
+    rofi
+    libreoffice
+    arc-theme
+    arc-icon-theme
+    vscode
+    nitrogen
+    ripgrep
+    fd
+    simplescreenrecorder
+    picom
+    lxsession
+    dunst 
+    zsh
+    oh-my-zsh
+    psmisc
+    exa
+    bat
+    pcmanfm
+    sxiv
+    libsForQt5.qtstyleplugin-kvantum
+    php
+    gnumake
+    materia-theme
+    papirus-icon-theme
   ];
 
   programs.zsh = {
@@ -144,25 +143,41 @@
     };
   };
 
+  virtualisation = {
+    docker = {
+	    enable = true;
+      enableOnBoot = false;
+    };
+  };
+
+
   nixpkgs = {
     config = {
-       packageOverrides = pkgs: rec {
-         polybar = pkgs.polybar.override {
-           i3Support = true;
-           pulseSupport = true;
-         };
-       };
-       allowUnfree = true;
-     };
-   }; 
+      packageOverrides = pkgs: rec {
+        polybar = pkgs.polybar.override {
+          i3Support = true;
+          pulseSupport = true;
+        };
+      };
+      allowUnfree = true;
+    };
+  }; 
   
-  environment.variables = {
-    _JAVA_AWT_WM_NONREPARENTING = "1";
-    QT_STYLE_OVERRIDE = "kvantum";
-    EDITOR = "vim";
-    BROWSER = "brave";
-    TERMINAL = "kitty";
-    PATH = "$HOME/.emacs.d/bin:$HOME/.bin:$PATH";
+  environment = {
+    variables = {
+        _JAVA_AWT_WM_NONREPARENTING = "1";
+        QT_STYLE_OVERRIDE = "kvantum";
+        EDITOR = "vim";
+        BROWSER = "brave";
+        TERMINAL = "kitty";
+        PATH = "$HOME/.emacs.d/bin:$HOME/.bin:$PATH";
+    };
+    sessionVariables = {
+        XDG_CACHE_HOME  = "$HOME/.cache";
+        XDG_CONFIG_HOME = "$HOME/.config";
+        XDG_DATA_HOME   = "$HOME/.local/share";
+        XDG_BIN_HOME    = "$HOME/.local/bin";
+    };
   };
   
   fonts.fonts = with pkgs; [
@@ -179,11 +194,5 @@
     (nerdfonts.override { fonts = [ "FiraCode" "UbuntuMono" "JetBrainsMono"]; })
   ];
   
-  services = {
-    openssh = {
-      enable = true;
-    };
-  };
   system.stateVersion = "21.11"; 
-
 }
