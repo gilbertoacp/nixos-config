@@ -84,30 +84,20 @@
   [
     wget 
     vim
-    emacs
     htop
-    neofetch
     git
-    lxappearance
     pcmanfm
     pavucontrol
     brave
-    unrar
-    unzip
-    zip 
-    p7zip
     lsof
-    imwheel
     mpv
     rofi
-    libreoffice
     arc-theme
     arc-icon-theme
     vscode
     nitrogen
     ripgrep
     fd
-    simplescreenrecorder
     picom
     lxsession
     dunst 
@@ -115,12 +105,8 @@
     oh-my-zsh
     psmisc
     pcmanfm
-    sxiv
-    libsForQt5.qtstyleplugin-kvantum
     php
     gnumake
-    materia-theme
-    papirus-icon-theme
   ];
 
   programs.zsh = {
