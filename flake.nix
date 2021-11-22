@@ -24,7 +24,7 @@
         homeDirectory = "/home/gilberto";
         configuration = {
           imports = [
-            ./users/gilberto/home.nix
+            ./home.nix
           ];
         };
       };
@@ -34,7 +34,7 @@
       gilberto = lib.nixosSystem {
         inherit system;
         modules = [ 
-          ./system/configuration.nix 
+          ./configuration.nix 
         ];
       };
     };

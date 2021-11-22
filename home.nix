@@ -26,14 +26,29 @@
       unzip
       zip 
       p7zip
+      bitwarden
+      evince
+      mpv 
+      gnome.file-roller
+      pantheon.elementary-calendar
+      discord
+      slack
+      teams
+      ripgrep
+      fd
+      vscode
+      rofi
+      nitrogen
+      gnumake
     ];
+
     stateVersion = "20.09";
   }; 
+
 
   programs = {
     neovim = {
       enable = true;
-      vimAlias = true;
       plugins = with pkgs.vimPlugins; [
         vim-nix
       ];

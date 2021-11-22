@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
-{
-  imports =
+{ imports =
     [ 
       ./hardware-configuration.nix
     ];
@@ -28,6 +27,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   services = {
+
     xserver = {
       enable = true;
       layout = "es";
@@ -38,25 +38,24 @@
 
       displayManager = {
         lightdm.enable = true;
-        defaultSession = "none+i3";
+        defaultSession = "none+awesome";
       };
 
       windowManager = {
-        i3 = {
-          enable = true;
-          extraPackages = with pkgs; [
-            dmenu         
-            i3status         
-            i3lock         
-            i3blocks     
-          ];
-          package = pkgs.i3-gaps;
+        awesome = {
+		      enable = true;
+		      luaModules = with pkgs.luaPackages; [
+			      luarocks
+		      ];
         };
-      };   
+	    };
+
     };
+
     openssh = {
-      enable = true;
+      enable = false;
     };
+
   };
   
   sound.enable = true;
@@ -70,8 +69,9 @@
     users = {
       gilberto = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "video" "audio" "storage" "docker"];  
+        extraGroups = [ "wheel" "networkmanager" "video" "audio" "storage" "docker" ];  
         shell = pkgs.zsh;
+        initialPassword = "gilberto";
       };
     }; 
   }; 
@@ -90,23 +90,13 @@
     pavucontrol
     brave
     lsof
-    mpv
-    rofi
-    arc-theme
-    arc-icon-theme
-    vscode
-    nitrogen
-    ripgrep
-    fd
     picom
     lxsession
-    dunst 
     zsh
     oh-my-zsh
     psmisc
     pcmanfm
     php
-    gnumake
   ];
 
   programs.zsh = {
@@ -133,7 +123,6 @@
     };
   };
 
-
   nixpkgs = {
     config = {
       packageOverrides = pkgs: rec {
@@ -147,19 +136,19 @@
   }; 
   
   environment = {
-    variables = {
-        _JAVA_AWT_WM_NONREPARENTING = "1";
-        QT_STYLE_OVERRIDE = "kvantum";
-        EDITOR = "vim";
-        BROWSER = "brave";
-        TERMINAL = "kitty";
-        PATH = "$HOME/.emacs.d/bin:$HOME/.bin:$PATH";
-    };
     sessionVariables = {
-        XDG_CACHE_HOME  = "$HOME/.cache";
-        XDG_CONFIG_HOME = "$HOME/.config";
-        XDG_DATA_HOME   = "$HOME/.local/share";
-        XDG_BIN_HOME    = "$HOME/.local/bin";
+      XDG_CACHE_HOME  = "$HOME/.cache";
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME   = "$HOME/.local/share";
+      XDG_BIN_HOME    = "$HOME/.local/bin";
+    };
+    variables = {
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+      QT_STYLE_OVERRIDE = "kvantum";
+      EDITOR = "vim";
+      BROWSER = "brave";
+      TERMINAL = "kitty";
+      PATH = "$HOME/.emacs.d/bin:$HOME/.bin:$PATH";
     };
   };
   
@@ -176,6 +165,6 @@
     roboto
     (nerdfonts.override { fonts = [ "FiraCode" "UbuntuMono" "JetBrainsMono"]; })
   ];
-  
+
   system.stateVersion = "21.11"; 
 }
