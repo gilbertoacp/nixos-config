@@ -27,35 +27,28 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   services = {
-
     xserver = {
       enable = true;
       layout = "es";
-
       desktopManager = {
         xterm.enable = false;
       };
-
       displayManager = {
         lightdm.enable = true;
         defaultSession = "none+awesome";
       };
-
       windowManager = {
         awesome = {
           enable = true;
           luaModules = with pkgs.luaPackages; [
             luarocks
           ];
+        };
       };
-};
-
     };
-
     openssh = {
       enable = false;
     };
-
   };
   
   sound.enable = true;
@@ -118,7 +111,7 @@
 
   virtualisation = {
     docker = {
-	    enable = true;
+      enable = true;
       enableOnBoot = false;
     };
   };
