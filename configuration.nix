@@ -43,12 +43,12 @@
 
       windowManager = {
         awesome = {
-		      enable = true;
-		      luaModules = with pkgs.luaPackages; [
-			      luarocks
-		      ];
-        };
-	    };
+          enable = true;
+          luaModules = with pkgs.luaPackages; [
+            luarocks
+          ];
+      };
+};
 
     };
 
