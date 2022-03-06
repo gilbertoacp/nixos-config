@@ -14,17 +14,24 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/933116e6-9bb3-4582-9170-c761973d9668";
+    { device = "/dev/sda3";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/D2B9-F72D";
+    { device = "/dev/sda1";
       fsType = "vfat";
     };
 
+  # Uncomment if dual booting with windows
+  # fileSystems."/windows" =
+  #   { device = "/dev/sda3";
+  #     fsType = "ntfs";
+  #   };
+
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/0b7cfa32-84c0-4df9-93ce-0913a3331c56"; }
+    [ { device = "/dev/sda2"; }
     ];
 
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

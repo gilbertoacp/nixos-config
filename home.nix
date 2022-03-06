@@ -1,17 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  programs.home-manager.enable = true;
-
   home = {
-    username = "gilberto";
-    homeDirectory = "/home/gilberto";
     packages = with pkgs; [
       kitty
       bat
       exa
       xdg-user-dirs
-      gtop
       neofetch
       lxappearance
       imwheel
@@ -22,44 +17,79 @@
       emacs
       libreoffice
       sxiv
-      unrar
-      unzip
-      zip 
-      p7zip
       bitwarden
       evince
       mpv 
       gnome.file-roller
       pantheon.elementary-calendar
-      discord
-      slack
-      teams
       ripgrep
       fd
-      vscode
       rofi
+      pcmanfm
       nitrogen
-      gnumake
+      vscode
+      android-studio
+      zsh
+      obs-studio
+      firefox
+      mailspring
+      pragha
+      fzf
+      (polybar.override {
+        i3Support = true;
+        pulseSupport = true;
+      })
     ];
-
-    stateVersion = "20.09";
   }; 
 
-
   programs = {
+    # TODO: configurar servicios: lxsession, nitrogen, picom, etc
+
+    home-manager = { enable = true; };
+
     neovim = {
       enable = true;
-      plugins = with pkgs.vimPlugins; [
-        vim-nix
-      ];
+      vimAlias = true;
     };
-    gpg = {
-      enable = true;
-    };
+
     git = {
       enable = true;
       userName = "Gilberto Calderón";
       userEmail = "calderongilberto3@gmail.com";
+      aliases = {
+        st = "status";
+        ci = "commit";
+        co = "checkout";
+        tm = "merge --no-ff --no-commit";
+        pp = "!git pull && git push";
+        rm-untracked = "!rm $(git ls-files --other --exclude-standard)";
+        lsblame = "!cd \"./$GIT_PREFIX\" && ls -A | xargs -n1 -I'{}' git log --no-merges --format='%h (%an%x09%ai) {}' -1 '{}' | column -ts $'\t'";
+        df = "diff";
+      };
+      extraConfig = {
+        credential = { helper = "store"; };
+      };
+    };
+
+    zsh = {
+      enable = true;
+      enableSyntaxHighlighting = true;
+      enableCompletion = true;
+      enableAutosuggestions = true;
+      shellAliases = {
+        ls = "exa";
+        ll = "ls -lah";
+        psmem = "ps auxf | sort -nr -k 4 | head -5";
+        pscpu = "ps auxf | sort -nr -k 3 | head -5";
+        cp = "cp -i";
+        mv = "mv -i";
+        rm = "rm -i";
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" "fzf" ];
+        theme = "sorin";
+      };
     };
   };
 }

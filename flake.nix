@@ -22,6 +22,7 @@
         inherit system pkgs;
         username = "gilberto";
         homeDirectory = "/home/gilberto";
+        stateVersion = "22.05";
         configuration = {
           imports = [
             ./home.nix
@@ -34,7 +35,7 @@
       gilberto = lib.nixosSystem {
         inherit system;
         modules = [ 
-          ./configuration.nix 
+          ./desktop 
         ];
       };
     };

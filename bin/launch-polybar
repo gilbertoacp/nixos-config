@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+pgrep polybar | xargs kill
+echo "---" | tee -a /tmp/bar.log
+polybar $1 2>&1 | tee -a /tmp/polybar1.log & disown
+echo "Bars launched..."

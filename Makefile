@@ -1,12 +1,11 @@
 build:
 	nixos-rebuild build --flake ".#"
 
-apply:
-	nixos-rebuild switch --flake ".#"  
+switch:
+	sudo nixos-rebuild switch --flake ".#"  
 
-update:
-	nix flake update 
-
-apply-users:
+switch-users:
 	nix build .#homeManagerConfigurations.gilberto.activationPackage
 	./result/activate
+
+all: switch switch-users
