@@ -14,7 +14,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/sda3";
+    { device = "/dev/sda6";
       fsType = "ext4";
     };
 
@@ -23,14 +23,13 @@
       fsType = "vfat";
     };
 
-  # Uncomment if dual booting with windows
-  # fileSystems."/windows" =
-  #   { device = "/dev/sda3";
-  #     fsType = "ntfs";
-  #   };
+  fileSystems."/windows" =
+    { device = "/dev/sda3";
+      fsType = "ntfs";
+    };
 
   swapDevices =
-    [ { device = "/dev/sda2"; }
+    [ { device = "/dev/sda5"; }
     ];
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

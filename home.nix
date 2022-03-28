@@ -3,48 +3,63 @@
 {
   home = {
     packages = with pkgs; [
-      kitty
+
+      # theme - appearance
+      lxappearance
+      libsForQt5.qtstyleplugin-kvantum
+      papirus-icon-theme
+      materia-theme
       bat
       exa
-      xdg-user-dirs
-      neofetch
-      lxappearance
-      imwheel
-      simplescreenrecorder
-      materia-theme
-      papirus-icon-theme
-      libsForQt5.qtstyleplugin-kvantum
-      emacs
-      libreoffice
-      sxiv
-      bitwarden
-      evince
-      mpv 
-      gnome.file-roller
-      pantheon.elementary-calendar
-      ripgrep
-      fd
-      rofi
-      pcmanfm
-      nitrogen
-      vscode
-      android-studio
-      zsh
-      obs-studio
-      firefox
-      mailspring
-      pragha
-      fzf
       (polybar.override {
         i3Support = true;
         pulseSupport = true;
       })
+
+      # terms
+      kitty
+
+      # desktop utils
+      onlyoffice-bin
+      ripgrep
+      evince
+      neofetch
+      imwheel
+      gnome.file-roller
+      xdg-user-dirs
+      rofi
+      pcmanfm
+      nitrogen
+
+      # development
+      emacs
+      vscode
+      android-studio
+      zsh
+
+      # browsers
+      firefox
+      google-chrome
+
+      # mail      
+      mailspring
+
+      # multimedia
+      simplescreenrecorder
+      obs-studio
+      pragha
+      sxiv
+
+      # misc
+      fzf
+      fd
+      bitwarden
+      postman
+      picom
     ];
   }; 
 
   programs = {
-    # TODO: configurar servicios: lxsession, nitrogen, picom, etc
-
     home-manager = { enable = true; };
 
     neovim = {
@@ -88,7 +103,7 @@
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" "fzf" ];
-        theme = "sorin";
+        theme = "gentoo";
       };
     };
   };

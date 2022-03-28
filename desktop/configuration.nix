@@ -50,6 +50,8 @@
   services = {
     openssh = { enable = false; };
 
+    dnsmasq = { enable = false; };
+
     gnome = { 
       gnome-keyring = { enable = true; };
     };
@@ -80,6 +82,10 @@
           ];
           package = pkgs.i3-gaps;
         };
+
+        bspwm = {
+          enable = true;
+        };
       };
     };
   };
@@ -93,7 +99,7 @@
     users = {
       gilberto = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "vboxusers" ]; 
+        extraGroups = [ "wheel" "networkmanager" "vboxusers" "libvirtd" "qemu-libvirtd" ]; 
         initialPassword = "gilberto";
         shell = pkgs.zsh;
       };
@@ -103,22 +109,24 @@
   fonts = {
     fontDir = { enable = true; };
     fonts = with pkgs; [
-      cantarell-fonts
       ttf_bitstream_vera
+      cantarell-fonts
       liberation_ttf
       cascadia-code
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-      liberation_ttf
       fira-code
       fira-code-symbols
+      fira-mono
       dina-font
       proggyfonts 
+      inconsolata
+      anonymousPro
       hack-font
       roboto
       (nerdfonts.override { 
-        fonts = [ "FiraCode" "UbuntuMono" "JetBrainsMono" ]; 
+        fonts = [ "FiraCode" "UbuntuMono" "JetBrainsMono" "Meslo" "RobotoMono" ]; 
       })
     ];
   };
@@ -129,6 +137,19 @@
         enable = true;
         enableExtensionPack = true;
       };
+    };
+    libvirtd = {
+      enable = true;
+      onShutdown = "shutdown";
+      onBoot = "start";
+      allowedBridges = [ "virbr0" ];
+      qemu = {
+        package = pkgs.qemu_kvm;
+      };
+    };
+    docker = {
+      enable = true;
+      enableOnBoot = false;
     };
   };
 
@@ -151,7 +172,10 @@
       VIDEOS=Videos
     '';
 
-    variables = { PATH = "$HOME/nixos-config/bin:$PATH"; };
+    variables = { 
+      PATH = "$HOME/.bin:$PATH"; 
+      EDITOR = "nvim";
+    };
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
@@ -160,16 +184,27 @@
       wget
       psmisc
       pavucontrol
-      brave
       lsof
       git
       kitty
+      
       zip
       unzip
       p7zip
       unrar
+
       gnumake
       htop
+
+      brave
+
+      virt-manager
+      OVMF
+      vde2
+      bridge-utils
+      netcat
+
+      sxhkd
     ];
   };
 
