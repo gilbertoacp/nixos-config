@@ -9,6 +9,8 @@
       libsForQt5.qtstyleplugin-kvantum
       papirus-icon-theme
       materia-theme
+      arc-icon-theme
+      arc-theme
       bat
       exa
       (polybar.override {
@@ -26,9 +28,9 @@
       neofetch
       imwheel
       gnome.file-roller
+      gnome.nautilus
       xdg-user-dirs
       rofi
-      pcmanfm
       nitrogen
 
       # development
@@ -55,7 +57,12 @@
       fd
       bitwarden
       postman
-      picom
+      picom 
+      php 
+      php80Packages.composer
+
+      postman
+      python310
     ];
   }; 
 

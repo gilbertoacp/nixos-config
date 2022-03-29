@@ -59,6 +59,16 @@
     xserver = {
       enable = true;
       layout = "es";
+
+      #videoDrivers = [ "modesetting" ];
+      #useGlamor = true;
+
+      videoDrivers = [ "intel" ];
+      deviceSection = ''
+        Option "DRI" "3"
+        # Option "TearFree" "true"
+      '';
+
       displayManager = {
         lightdm = { enable = true; };
         defaultSession = "none+i3";
@@ -83,9 +93,7 @@
           package = pkgs.i3-gaps;
         };
 
-        bspwm = {
-          enable = true;
-        };
+        bspwm = { enable = true; };
       };
     };
   };
@@ -205,6 +213,7 @@
       netcat
 
       sxhkd
+      cpupower-gui
     ];
   };
 
